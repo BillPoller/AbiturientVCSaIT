@@ -1,0 +1,121 @@
+import java.util.*;
+
+class NavigatorForAbiturentersOfVCSaIT
+{
+	public static void main(String[] args)
+	{
+		List<Abiturient> list = new ArrayList<>();
+		try
+		{
+			System.out.println("Консольная программа \"АбитуриентВКСиИТ\" приветствует Вас!!!"+"\n");
+			System.out.println("Список всевозможных операций программы АбитуриентВКСиИТ");
+			System.out.println(" _________________________________________"+"\n"+
+		                       "| наименование операции |  | код операции |" + "\n"+
+		                       "|_______________________|__|______________|"+"\n"+
+		                       "| показать список абит. |  |      1       |" + "\n"+
+							   "|_______________________|__|______________|"+"\n"+
+						       "| сорт. по ср. баллу    |  |      2       |" + "\n"+
+							   "|_______________________|__|______________|"+"\n"+
+						       "| добавить абитуриента  |  |      3       |" + "\n"+
+							   "|_______________________|__|______________|"+"\n"+
+						       "| удалить абитуриента   |  |      4       |"+"\n"+
+			                   "|_______________________|__|______________|"+"\n");
+			while(!(2 + 2 == 5))
+			{
+				System.out.println("Напишите код операции:");
+				int code = new Scanner(System.in).nextInt();
+				if(code == 1)
+				{
+					if(list.isEmpty())
+					{
+						System.out.println("Ошибка: список пуст!");
+					}
+					else
+					{
+						System.out.println(" ____________________________________________________");
+						for(Abiturient ab : list)
+						{
+							System.out.println("| "+ab.getFullName() + "       |  |       " + ab.getScore() + " |");
+							//System.out.println("|________________________|__|_____________|");
+						}
+					}
+				}
+				else if(code == 2)
+				{
+					if(!list.isEmpty())
+					{
+						Comparator c = new Comp();
+						Collections.sort(list, c);
+						System.out.println("Выполнено!!!");
+					}
+					else
+					{
+						System.out.println("Ошибка: список пуст!");
+					}
+				}
+				else if(code == 3)
+				{
+					String fullName = "";
+					Float score;
+					System.out.println("Заполняем персональные данные абитуриента:");
+					System.out.print("Введите фамилию абитуриента: " + "\n");
+					fullName += (new Scanner(System.in).next()+" ");
+					System.out.print("Введите имя абитуриента: " +"\n");
+					fullName += (new Scanner(System.in).next()+" ");
+					System.out.print("Введите отчество абитуриента: "+"\n");
+					fullName += (new Scanner(System.in).next()+" ");
+					System.out.println("Отлично!!! Теперь введи средний балл в аттестате: ");
+					score = (Float)(new Scanner(System.in).nextFloat());
+					list.add(new Abiturient(fullName, score));
+					System.out.println("Поздравлеям, абитуриент записан в список!!!");
+				}
+				else
+				{
+					System.out.println("Ошибка: такой операции не существует!!!");
+				}
+			}
+		}
+		catch(Exception excp){
+
+		}
+	}
+}
+class Abiturient
+{
+	private String fullName;
+	private Float score;
+	public Abiturient(final String fullName,
+					  final Float score)
+	{
+		this.fullName = fullName;
+		this.score = score;
+	}
+	protected String getFullName()
+	{
+		return this.fullName;
+	}
+	protected Float getScore()
+	{
+		return this.score;
+	}
+}
+class Comp implements Comparator
+{
+	public int compare(Object p1, Object p2)
+	{
+		Float one = ((Abiturient)p1).getScore();
+		Float two = ((Abiturient)p2).getScore();
+		if(one == two)
+		{
+			return 0;
+		}
+		else if(one < two)
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+}
